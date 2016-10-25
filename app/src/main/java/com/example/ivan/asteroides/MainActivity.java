@@ -20,7 +20,7 @@ public class MainActivity extends Activity {
 
 
     public static AlmacenPuntuaciones almacen= new AlmacenPuntuacionesArray();
-    private Button bAcercaDe;
+    private Button bAcercaDe1;
     public MediaPlayer mp;
 
    //private ThreadMain thread = new ThreadMain();
@@ -30,8 +30,8 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.asteroides);
-        bAcercaDe = (Button) findViewById(R.id.button3);
-        bAcercaDe.setOnClickListener(new View.OnClickListener() {
+        bAcercaDe1 = (Button) findViewById(R.id.button3);
+        bAcercaDe1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 lanzarAcercaDe(null);
             }
