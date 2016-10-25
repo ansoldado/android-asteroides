@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center">
+
+
+        <TextView
+            android:text="@string/tituloapp"
+
+            android:layout_gravity="center"
+            android:id="@+id/Asteroides"
+            android:paddingTop="50dp"
+            style="@style/estilo_verde"
+            android:textSize="36sp"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:textStyle="bold">
+
+        </TextView>
+
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/activity_horizontal_margin">
+
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <Button
+            android:text="@string/Arrancar"
+            android:id="@+id/button"
+            android:layout_column="0"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:onClick="lanzarJuego"
+            tools:ignore="ButtonStyle" />
+
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/salir"
+            android:id="@+id/button4"
+            android:layout_column="1"
+            android:layout_weight="1"
+            android:onClick="lanzarPuntuaciones"
+            tools:ignore="ButtonStyle" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/acerca_de"
+            android:id="@+id/button3"
+            android:layout_column="0"
+            android:layout_weight="1"
+            android:onClick="lanzarAcercaDe"
+            tools:ignore="ButtonStyle" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/configurar"
+            android:id="@+id/button2"
+            android:layout_column="1"
+            android:layout_weight="1"
+            android:onClick="lanzarPreferencias"
+            android:clickable="true"
+            tools:ignore="ButtonStyle" />
+    </TableRow>
+</TableLayout>
+
+</LinearLayout>

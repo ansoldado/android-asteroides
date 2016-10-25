@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Asteroides</string>
+    <string name="Arrancar">JUGAR</string>
+    <string name="configurar">CONFIGURAR</string>
+    <string name="acerca_de">ACERCA DE</string>
+    <string name="salir">MOSTRAR PUNTUACIONES</string>
+    <string name="tituloapp">Asteroides</string>
+    <string name="acercade">Este programa ha sido desarrollado como ejemplo en el curso de Android para desmotrar como se pueden lanzar nuevas actividades desde la actividad principal.</string>
+    <string name="preferencias">Preferencias</string>
+</resources>

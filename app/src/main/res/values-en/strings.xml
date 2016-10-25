@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Asteroids</string>
+    <string name="Arrancar">PLAY</string>
+    <string name="configurar">SET UP</string>
+    <string name="acerca_de">ABOUT</string>
+    <string name="salir">EXIT</string>
+    <string name="tituloapp">Asteroids</string>
+</resources>
