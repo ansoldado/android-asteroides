@@ -19,11 +19,11 @@ import android.widget.Toast;
 public class MainActivity extends Activity {
 
 
-    public static AlmacenPuntuaciones almacen = new AlmacenPuntuacionesArray();
+    public static AlmacenPuntuaciones almacen= new AlmacenPuntuacionesArray();
     private Button bAcercaDe1;
     public MediaPlayer mp;
 
-    //private ThreadMain thread = new ThreadMain();
+   //private ThreadMain thread = new ThreadMain();
     ///////private VistaJuego vistaJuego;
 
     @Override
@@ -38,6 +38,7 @@ public class MainActivity extends Activity {
         });
         mp = MediaPlayer.create(this, R.raw.audio);
         mp.start();
+
 
 
         //ciclo de vida de una actividad
@@ -65,16 +66,16 @@ public class MainActivity extends Activity {
         boton4Anim.startAnimation(animation4);
 
 
+
+
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    @Override public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.mi_menu, menu);
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
         if (id == R.id.acercaDe) {
@@ -85,15 +86,14 @@ public class MainActivity extends Activity {
             lanzarPreferencias(null);
             return true;
         }
-        return super.onOptionsItemSelected(item);
-    }
+        return super.onOptionsItemSelected(item); }
 
-    public void lanzarAcercaDe(View view) {
+    public void lanzarAcercaDe (View view) {
         Intent i = new Intent(this, AcercaDeActivity.class);
         startActivity(i);
     }
 
-    public void lanzarPreferencias(View view) {
+    public void lanzarPreferencias (View view) {
         Intent i = new Intent(this, Preferencias.class);
         startActivity(i);
         mp.pause();
@@ -112,11 +112,11 @@ public class MainActivity extends Activity {
     }
 
 
-    public void mostrarPreferencias(View view) {
+    public void mostrarPreferencias(View view){
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
-        String s = "música: " + pref.getBoolean("musica", true) + ", gráficos: " + pref.getString("graficos", "?") +
-                "multijugador: " + pref.getBoolean("multijugador", false) + ", jugadoresmax: " + pref.getString("jugadoresmax", "?") +
-                "tipo conexion: " + pref.getString("tipo conexion", "?") + "fragmentos: " + pref.getString("fragmentos", "?");
+        String s = "música: " + pref.getBoolean("musica",true) +", gráficos: " + pref.getString("graficos","?")+
+                "multijugador: " + pref.getBoolean("multijugador", false) +", jugadoresmax: " + pref.getString("jugadoresmax", "?")+
+                "tipo conexion: " + pref.getString("tipo conexion", "?")+ "fragmentos: " + pref.getString("fragmentos", "?");
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
@@ -141,30 +141,67 @@ public class MainActivity extends Activity {
         */
 
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mp.pause();
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mp.start();
-    }
+    //////////trabajando aqui
 
 
-    @Override
-    protected void onSaveInstanceState(Bundle estadoGuardado) {
-        super.onSaveInstanceState(estadoGuardado);
-        if (mp != null) {
-            int pos = mp.getCurrentPosition();
-            estadoGuardado.putInt("posicion", pos);
+   /* class ThreadMain extends Thread {
+        private boolean pausado, corriendo;
+
+        public synchronized void pausar() {
+            pausado = true;
+        }
+        public synchronized void restablecer() {
+            pausado = false;
+            notify();
+        }
+        public void detener() {
+            corriendo = false;
+            if (pausado) restablecer();
+        }
+        @Override public void run() {
+            corriendo = true;
+            while (corriendo) {
+                mp.start();
+                synchronized (this) {
+                    while (pausado) {
+                        try {
+                            mp.pause();
+
+                        } catch (Exception e) {mp.stop(); }
+                    }
+                }
+            }
         }
     }
 
-    @Override
-    protected void onRestoreInstanceState(Bundle estadoGuardado) {
+    public ThreadMain getThread() {
+        return thread;
+    }
+
+
+    @Override protected void onPause() {
+        super.onPause();
+        vistaJuego.getThread().pausar();
+
+    }
+    @Override protected void onResume() {
+        super.onResume();
+        vistaJuego.getThread().reanudar();
+
+    }*/
+    @Override protected void onDestroy() {
+        super.onDestroy();
+        mp.stop();
+    }
+
+    @Override protected void onSaveInstanceState(Bundle estadoGuardado){
+        super.onSaveInstanceState(estadoGuardado);
+        if (mp != null) {
+            int pos = mp.getCurrentPosition();
+            estadoGuardado.putInt("posicion", pos); }
+    }
+    @Override protected void onRestoreInstanceState(Bundle estadoGuardado){
         super.onRestoreInstanceState(estadoGuardado);
         if (estadoGuardado != null && mp != null) {
             int pos = estadoGuardado.getInt("posicion");
