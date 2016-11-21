@@ -1,6 +1,8 @@
 package com.example.ivan.asteroides;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -18,6 +20,7 @@ import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
+import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
@@ -84,6 +87,11 @@ public class VistaJuego extends View implements SensorEventListener {
     SoundPool soundPool;
     int idDisparo, idExplosion;
     MediaPlayer mpDisparo, mpExplosion;
+
+    //PUNTUACIONES
+    private int puntuacion = 0;
+
+    private Activity padre;
 
 
     public VistaJuego(Context context, AttributeSet attrs) {
@@ -182,6 +190,10 @@ public class VistaJuego extends View implements SensorEventListener {
 
     }
 
+    public void setPadre(Activity padre) {
+        this.padre = padre;
+    }
+
     protected void actualizaFisica() {
         long ahora = System.currentTimeMillis();
         if (ultimoProceso + PERIODO_PROCESO > ahora) {
@@ -234,6 +246,20 @@ public class VistaJuego extends View implements SensorEventListener {
                 }
             }
         }
+        for (Grafico asteroide : asteroides) {
+            if (asteroide.verificaColision(nave)) {
+                salir(); }
+        }
+    }
+
+
+    private void salir() {
+        Bundle bundle = new Bundle();
+        bundle.putInt("puntuacion", puntuacion);
+        Intent intent = new Intent();
+        intent.putExtras(bundle);
+        padre.setResult(Activity.RESULT_OK, intent);
+        padre.finish();
     }
 
     @Override protected void onSizeChanged(int ancho, int alto, int ancho_anter, int alto_anter) {
@@ -277,6 +303,9 @@ public class VistaJuego extends View implements SensorEventListener {
             asteroides.remove(i);
             //misilActivo = false;
             soundPool.play(idExplosion, 1, 1, 0, 1, 2);
+            puntuacion += 1000;
+            if (asteroides.isEmpty()) {
+                salir(); }
         }
     }
 

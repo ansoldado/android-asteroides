@@ -20,6 +20,13 @@
         android:entries="@array/tipoControl"
         android:entryValues="@array/tipoControlValores"
         android:defaultValue="1"/>
+    <ListPreference
+        android:key="puntuaciones"
+        android:title="almacenar puntuaciones"
+        android:summary="elige donde se almacenan las puntuaciones del juego"
+        android:entries="@array/tipoAlmacenPuntuaciones"
+        android:entryValues="@array/tipoAlmacenPuntuacionesValores"
+        android:defaultValue="1"/>
     <EditTextPreference
         android:key="fragmentos"
         android:title="Número de Fragmentos"

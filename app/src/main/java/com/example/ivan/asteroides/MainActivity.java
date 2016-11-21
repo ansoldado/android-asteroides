@@ -1,11 +1,13 @@
 package com.example.ivan.asteroides;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,7 +21,7 @@ import android.widget.Toast;
 public class MainActivity extends Activity {
 
 
-    public static AlmacenPuntuaciones almacen = new AlmacenPuntuacionesArray();
+    public static AlmacenPuntuaciones almacen;
     private Button bAcercaDe1;
     public MediaPlayer mp;
 
@@ -37,6 +39,26 @@ public class MainActivity extends Activity {
             }
         });
         mp = MediaPlayer.create(this, R.raw.audio);
+
+
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+        if (pref.getString("puntuaciones", "1").equals("0")) {
+            Log.d("Puntuaciones", "Guardando en 0");
+            almacen = new AlmacenPuntuacionesPreferencias(this);
+        }
+        if (pref.getString("puntuaciones", "2").equals("1")){
+            Log.d("Puntuaciones", "Guardando en 1");
+            almacen = new AlmacenPuntuacionesFicheroInterno(this);
+        }
+        if (pref.getString("puntuaciones", "3").equals("2")){
+            Log.d("Puntuaciones", "Guardando en 2");
+            almacen =new AlmacenPuntuacionesArray();
+        }
+        if (pref.getString("puntuaciones", "4").equals("3")){
+            Log.d("Puntuaciones", "Guardando en memoria externa");
+            almacen = new AlmacenPuntuacionesFicheroExterno(this);
+        }
+
         mp.start();
 
 
@@ -106,9 +128,23 @@ public class MainActivity extends Activity {
     }
 
     public void lanzarJuego(View view) {
+        Log.e("ALMACEN",almacen.toString());
         Intent i = new Intent(this, Juego.class);
-        startActivity(i);
-        mp.pause();
+        startActivityForResult(i, 1234);
+
+    }
+
+    @Override
+    protected void onActivityResult (int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==1234 && resultCode==RESULT_OK && data!=null) {
+            int puntuacion = data.getExtras().getInt("puntuacion");
+            String nombre = "Yo";
+// Mejor leer nombre desde un AlertDialog.Builder o preferencias
+            Log.e("ALMACEN 2",almacen.toString());
+            almacen.guardarPuntuacion(puntuacion, nombre, System.currentTimeMillis());
+            lanzarPuntuaciones(null);
+        }
     }
 
 
@@ -171,4 +207,6 @@ public class MainActivity extends Activity {
             mp.seekTo(pos);
         }
     }
+
+
 }
