@@ -58,6 +58,18 @@ public class MainActivity extends Activity {
             Log.d("Puntuaciones", "Guardando en memoria externa");
             almacen = new AlmacenPuntuacionesFicheroExterno(this);
         }
+        if (pref.getString("puntuaciones", "5").equals("4")){
+            Log.d("Puntuaciones", "Guardando en fichero XML con SAX");
+            almacen = new AlmacenPuntuacionesXML_SAX(this);
+        }
+        if (pref.getString("puntuaciones", "6").equals("5")){
+            Log.d("Puntuaciones", "Guardando en base de datos");
+            almacen = new AlmacenPuntuacionesSQLite(this);
+        }
+        if (pref.getString("puntuaciones", "7").equals("6")){
+            Log.d("Puntuaciones", "Guardando mediante protocolo de Socket");
+            almacen = new AlmacenPuntuacionesSocket();
+        }
 
         mp.start();
 

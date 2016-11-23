@@ -33,12 +33,18 @@
         <item>fichero memoria interna</item>
         <item>array</item>
         <item>fichero memoria externa</item>
+        <item>fichero XML con SAX</item>
+        <item>base de datos</item>
+        <item>protocolo socket</item>
     </string-array>
     <string-array name="tipoAlmacenPuntuacionesValores">
         <item>0</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
     </string-array>
 
 
