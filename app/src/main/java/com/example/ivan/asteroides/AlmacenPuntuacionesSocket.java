@@ -19,7 +19,7 @@ public class AlmacenPuntuacionesSocket implements AlmacenPuntuaciones{
     }
 
     public void guardarPuntuacion(int puntos, String nombre, long fecha){ try {
-        Socket sk = new Socket("X.X.X.X", 1234);
+        Socket sk = new Socket("158.42.146.127:1234", 1234);
         BufferedReader entrada = new BufferedReader(
                 new InputStreamReader(sk.getInputStream()));
         PrintWriter salida = new PrintWriter(
@@ -35,7 +35,7 @@ public class AlmacenPuntuacionesSocket implements AlmacenPuntuaciones{
     }
     public Vector<String> listaPuntuaciones(int cantidad) { Vector<String> result = new Vector<String>();
         try {
-            Socket sk = new Socket("X.X.X.X", 1234);
+            Socket sk = new Socket("158.42.146.127:1234", 1234);
             BufferedReader entrada = new BufferedReader(
                     new InputStreamReader(sk.getInputStream()));
             PrintWriter salida = new PrintWriter(

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
@@ -39,9 +40,15 @@ public class MainActivity extends Activity {
             }
         });
         mp = MediaPlayer.create(this, R.raw.audio);
+        StrictMode.setThreadPolicy(
+                new StrictMode.
+                        ThreadPolicy.
+                        Builder().
+                        permitNetwork().
+                        build());
 
 
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+        /*SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
         if (pref.getString("puntuaciones", "1").equals("0")) {
             Log.d("Puntuaciones", "Guardando en 0");
             almacen = new AlmacenPuntuacionesPreferencias(this);
@@ -70,8 +77,16 @@ public class MainActivity extends Activity {
             Log.d("Puntuaciones", "Guardando mediante protocolo de Socket");
             almacen = new AlmacenPuntuacionesSocket();
         }
+        if (pref.getString("puntuaciones", "8").equals("7")){
+            Log.d("Puntuaciones", "Guardando servicio web php");
+            almacen = new AlmacenPuntuacionesSW_PHP();
+        }*/
 
         mp.start();
+
+
+
+
 
 
         //ciclo de vida de una actividad
@@ -101,6 +116,10 @@ public class MainActivity extends Activity {
 
     }
 
+
+
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.mi_menu, menu);
@@ -129,7 +148,7 @@ public class MainActivity extends Activity {
 
     public void lanzarPreferencias(View view) {
         Intent i = new Intent(this, Preferencias.class);
-        startActivity(i);
+        startActivityForResult(i, 0);
         mp.pause();
     }
 
@@ -156,6 +175,41 @@ public class MainActivity extends Activity {
             Log.e("ALMACEN 2",almacen.toString());
             almacen.guardarPuntuacion(puntuacion, nombre, System.currentTimeMillis());
             lanzarPuntuaciones(null);
+        }
+        if (requestCode==0){
+            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+            if (pref.getString("puntuaciones", "1").equals("0")) {
+                Log.d("Puntuaciones", "Guardando en 0");
+                almacen = new AlmacenPuntuacionesPreferencias(this);
+            }
+            if (pref.getString("puntuaciones", "2").equals("1")){
+                Log.d("Puntuaciones", "Guardando en 1");
+                almacen = new AlmacenPuntuacionesFicheroInterno(this);
+            }
+            if (pref.getString("puntuaciones", "3").equals("2")){
+                Log.d("Puntuaciones", "Guardando en 2");
+                almacen =new AlmacenPuntuacionesArray();
+            }
+            if (pref.getString("puntuaciones", "4").equals("3")){
+                Log.d("Puntuaciones", "Guardando en memoria externa");
+                almacen = new AlmacenPuntuacionesFicheroExterno(this);
+            }
+            if (pref.getString("puntuaciones", "5").equals("4")){
+                Log.d("Puntuaciones", "Guardando en fichero XML con SAX");
+                almacen = new AlmacenPuntuacionesXML_SAX(this);
+            }
+            if (pref.getString("puntuaciones", "6").equals("5")){
+                Log.d("Puntuaciones", "Guardando en base de datos");
+                almacen = new AlmacenPuntuacionesSQLite(this);
+            }
+            if (pref.getString("puntuaciones", "7").equals("6")){
+                Log.d("Puntuaciones", "Guardando mediante protocolo de Socket");
+                almacen = new AlmacenPuntuacionesSocket();
+            }
+            if (pref.getString("puntuaciones", "8").equals("7")){
+                Log.d("Puntuaciones", "Guardando servicio web php");
+                almacen = new AlmacenPuntuacionesSW_PHP();
+            }
         }
     }
 
